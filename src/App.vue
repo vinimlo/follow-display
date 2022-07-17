@@ -1,27 +1,63 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <main @click="toggleTime">
+    <section class="row" id="top-row">
+      <MainCronometer ref="mainCronometer" :isTimeRunning="isTimeRunning" />
+    </section>
+    <section class="row" id="bottom-row">
+      <RankingContainer />
+    </section>
+  </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import MainCronometer from './components/MainCronometer.vue'
+import RankingContainer from './components/RankingContainer.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    MainCronometer,
+    RankingContainer
+  },
+  data() {
+    return {
+      isTimeRunning: false
+    }
+  },
+  methods: {
+    toggleTime() {
+      this.isTimeRunning = !this.isTimeRunning;
+      (this.$refs['mainCronometer'] as typeof MainCronometer).toggleTime();
+    }
   }
 });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+main {
+  width: 100%;
+  height: auto;
+}
+
+.row {
+  width: 100%;
+}
+
+#top-row {
+  background-color: #0097a7;
+  height: 50vh;
+}
+
+#bottom-row {
+  background-color: #f2f2f2;
+  height: 50vh;
 }
 </style>
